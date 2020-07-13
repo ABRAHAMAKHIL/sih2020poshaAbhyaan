@@ -1,0 +1,20 @@
+from django.urls import path,include
+from . import views
+urlpatterns = [
+    path("loginBen/",views.loginBen,name="loginBen"),
+    path("registerBen/",views.registerBen,name="registerBen"),
+    path("homeBen/",views.homeBen,name="homeBen"),
+    path("logout", views.logout_request, name="logout"),
+    path('userbmi',views.index,name='userbmi'),
+    path('display',views.displaybmi,name='displaybmi'),
+    path('timelinegen',views.timelinegen,name="timelinegen"),
+    path('gentimeline',views.gentimeline,name='gentimeline'),
+    path('checktimeline',views.checktimeline,name='checktimeline'),
+    path('timelinepage',views.timelinepage,name='timelinepage'),
+    path('visitapptid',views.visitapptid,name='visitapptid'), 
+    path('userbmiapptid',views.userbmiapptid,name='userbmiapptid'),
+    path('displayappt',views.displayappt,name='displayappt'),
+]
+    
+  
+    

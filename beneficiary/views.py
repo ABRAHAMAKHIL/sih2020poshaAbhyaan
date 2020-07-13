@@ -1,0 +1,180 @@
+from django.shortcuts import render,redirect
+from . forms import beneficiary_info,UserForm,usr
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+from . models import *
+from datetime import datetime  
+from datetime import timedelta  
+from django.contrib.auth.decorators import login_required
+from django.db import connections
+from django.contrib.auth import authenticate, login, logout
+from .decorators import unauthenticated_user,allowed_users
+# Create your views here.
+@unauthenticated_user
+def loginBen(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return HttpResponseRedirect(reverse('homeBen'))
+            else:
+                return HttpResponse("Your account was inactive.")
+        else:
+            print("Someone tried to login and failed.")
+            print("They used username: {} and password: {}".format(username,password))
+            return HttpResponse("Invalid login details given")
+    else:
+           
+         return render(request,"beneficiary_login.html")
+
+def registerBen(request):
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        Create_user = beneficiary_info(data=request.POST)
+        if user_form.is_valid() and Create_user.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            cruser = Create_user.save(commit=False)
+            cruser.u_user = user
+            cruser.u_verified = request.user;
+            cruser.save()
+
+            request.session['u_phno'] = cruser.u_phno;
+
+            registered = True   
+            return HttpResponseRedirect(reverse('userbmi'))
+        else:
+            print(user_form.errors,Create_user.errors)
+    else:
+        user_form = UserForm()
+        Create_user = beneficiary_info()
+    return render(request,'beneficiary_register.html',
+                          {'user_form':user_form,
+                           'Create_user':Create_user,
+                           'registered':registered})
+
+
+@login_required(login_url='loginBen')  
+def homeBen(request):
+    user1 = beneficiary_register.objects.get(u_phno = request.user)
+    context = {'user1':user1}
+    
+    return render(request,"beneficiary_home.html",context)
+
+
+def logout_request(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('loginpage'))
+@login_required(login_url='loginPage')
+
+def index(request):
+    #if request.method=="GET":  
+    form1 = request.session.get('u_phno')
+    forms = usr()
+    return render(request,'form.html',{'form':forms,'form1':form1})
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def displaybmi(request):
+    w=int(request.POST["bmweight"])
+    h=int(request.POST["bmheight"])
+    bmi=h*w
+    bid=request.session.get('u_phno')
+    date=(request.POST["bmdate"])
+    blood=float(request.POST["bmblood"])
+    bmworker = request.user
+
+    cursor = connections['default'].cursor()
+    cursor.execute("INSERT INTO beneficiary_userbmi(u_user_id,bmdate,bmworker,currentbmi,bmweight,bmheight,bmblood) VALUES( %s , %s,%s , %s, %s ,%s , %s )", [bid, date,bmworker,bmi,w,h,blood])
+    userdisp={'id':bid,'date':date,bmworker:'bmworker','currentbmi':bmi,'weight':w,'height':h,'blood':blood}
+    return render(request,"result.html",{'vals':userdisp})
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def timelinegen(request):
+      id= request.session.get('u_phno')
+      return render(request,'timelinegen.html',{'id':id})
+    
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers'])  
+def gentimeline(request):
+    id=int(request.POST["userid"])
+    request.session['u_phno'] = id
+    z = str(request.session.get('hw_pincode'))
+    v = str(request.user)
+    date1=datetime.now()+ timedelta(days=30)
+    date2=datetime.now()+ timedelta(days=60)
+    date3=datetime.now()+ timedelta(days=90)
+    x1=1
+    x2=2
+    x3=3
+    a = datetime.date(date1).strftime("%Y%m%d")
+    b = datetime.date(date2).strftime("%Y%m%d")
+    c = datetime.date(date3).strftime("%Y%m%d")
+    a = a+str(id)
+    b = b+str(id)
+    c = c+str(id)
+    cursor = connections['default'].cursor()
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode) VALUES( %s , %s ,%s,%s,%s,%s)", [id, date1,x1,a,v,z])
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode) VALUES( %s , %s ,%s,%s,%s,%s)", [id, date2,x2,b,v,z])
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode) VALUES( %s , %s ,%s,%s,%s,%s)", [id, date3,x3,c,v,z])
+
+    return HttpResponseRedirect(reverse('timelinepage'))
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers'])  
+def checktimeline(request):
+  return render(request,'checktimeline.html')
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def timelinepage(request):
+    id=request.session.get('u_phno')
+    
+    vals= userappointments.objects.filter(u_user_id=id)
+    return render(request,'timelinepage.html',{'rows':vals})
+    
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+
+def visitapptid(request):
+    return render(request,'visitapptid.html')
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def userbmiapptid(request):
+    refid=int(request.POST["userid"])
+    val=True
+    val1 = str(request.user)
+    cursor1 = connections['default'].cursor()
+    cursor1.execute("UPDATE beneficiary_userappointments SET apstatus = %s WHERE apref = %s", [val,refid])
+    cursor1.execute("UPDATE beneficiary_userappointments SET apreceived = %s WHERE apref = %s", [val1,refid])
+    cursor = connections['default'].cursor()
+    cursor.execute("SELECT u_user_id FROM beneficiary_userappointments WHERE apref = %s", [refid])
+    row = cursor.fetchone()
+    form1=str(row[0])
+    forms = usr()
+    return render(request,'visitapptbmi.html',{'form':forms,'useridpass':form1})
+
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def displayappt(request):
+    w=int(request.POST["bmweight"])
+    h=int(request.POST["bmheight"])
+    bmi=h*w
+    bid=request.session.get('u_phno')
+    date=(request.POST["bmdate"])
+    blood=float(request.POST["bmblood"])
+    bmworker = request.user
+
+    cursor = connections['default'].cursor()
+    cursor.execute("INSERT INTO beneficiary_userbmi(u_user_id,bmdate,bmworker,currentbmi,bmweight,bmheight,bmblood) VALUES( %s , %s,%s , %s, %s ,%s , %s )", [bid, date,bmworker,bmi,w,h,blood])
+    userdisp={'id':bid,'date':date,bmworker:'bmworker','currentbmi':bmi,'weight':w,'height':h,'blood':blood}
+    return render(request,"resultappt.html",{'vals':userdisp})
+   
