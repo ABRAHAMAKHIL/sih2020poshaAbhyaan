@@ -143,6 +143,7 @@ def timelinepage(request):
 @allowed_users(allowed_roles=['healthworkers']) 
 
 def visitapptid(request):
+    
     return render(request,'visitapptid.html')
 
 @login_required(login_url='loginPage')
@@ -177,4 +178,38 @@ def displayappt(request):
     cursor.execute("INSERT INTO beneficiary_userbmi(u_user_id,bmdate,bmworker,currentbmi,bmweight,bmheight,bmblood) VALUES( %s , %s,%s , %s, %s ,%s , %s )", [bid, date,bmworker,bmi,w,h,blood])
     userdisp={'id':bid,'date':date,bmworker:'bmworker','currentbmi':bmi,'weight':w,'height':h,'blood':blood}
     return render(request,"resultappt.html",{'vals':userdisp})
+
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def rescheduleRef(request):
+     return render(request,'rescheduleRef.html')
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def rescheduleDetail(request):
+    refid=int(request.POST["userid"])
+    
+    val1 = str(request.user)
+    cursor1 = connections['default'].cursor()
+    
+    
+    cursor1.execute("UPDATE beneficiary_userappointments SET apreceived = %s WHERE apref = %s", [val1,refid])
+    cursor = connections['default'].cursor()
+    cursor.execute("SELECT u_user_id,apdate FROM beneficiary_userappointments WHERE apref = %s", [refid])
    
+    row = cursor.fetchone()
+    form1=str(row[0])
+    form2 = row[1]
+    form2 = str(form2)
+   
+    return render(request,'rescheduleDetail.html',{'useridpass':form1,'form2':form2,'refid':refid})
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def rescheduleprocess(request):
+    refid=int(request.POST["refid"])
+    newdate= str(request.POST["newdate"])
+    cursor1 = connections['default'].cursor()
+    cursor1.execute("UPDATE beneficiary_userappointments SET apdate = %s WHERE apref = %s", [newdate,refid])
+    return render(request,'dashboard.html')

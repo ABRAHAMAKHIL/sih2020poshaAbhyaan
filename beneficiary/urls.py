@@ -14,6 +14,9 @@ urlpatterns = [
     path('visitapptid',views.visitapptid,name='visitapptid'), 
     path('userbmiapptid',views.userbmiapptid,name='userbmiapptid'),
     path('displayappt',views.displayappt,name='displayappt'),
+    path('rescheduleRef',views.rescheduleRef,name='rescheduleRef'),
+    path('rescheduleDetail',views.rescheduleDetail,name='rescheduleDetail'),
+    path('rescheduleprocess',views.rescheduleprocess,name='rescheduleprocess'),
 ]
     
   
