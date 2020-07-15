@@ -10,6 +10,8 @@ urlpatterns = [
     path("workerPlist",views.workerPlist,name="workerPlist"),
     path("workerAppt",views.workerAppt,name="workerAppt"),
     path("logoutpage",views.logout_page,name="logoutpage"),
+    path("timelinepatient",views.timelinepatient,name="timelinepatient"),
+    path("timelineprocess",views.timelineprocess,name="timelineprocess"),
  
     
 ]

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from beneficiary.models import beneficiary_register,userappointments
+from beneficiary.models import beneficiary_register,userappointments,userbmi
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from datetime import datetime 
@@ -77,7 +77,7 @@ def loginPage(request):
 
                 login(request,user)
                 cursor = connections['default'].cursor()
-                cursor.execute("SELECT hw_pincode FROM accounts_worker_register WHERE hw_phno = %s", [username])
+                cursor.execute("SELECT hw_pincode FROM Accounts_worker_register WHERE hw_phno = %s", [username])
                 row = cursor.fetchone()
                 form1=str(row[0])
                
@@ -137,6 +137,20 @@ def workerAppt(request):
     context = {'form':form,'ver':ver,'notver':notver}
     return render(request,"appointments.html",context)
    
+@login_required(login_url='loginPage')  
+def timelinepatient(request):
+
+   return render(request,"timelinepatient.html")
+
+def timelineprocess(request):
+    id=int(request.POST["id"])
+    form = userappointments.objects.all()
+    ver = form.filter(u_user_id=id)
+    form1 = userbmi.objects.all()
+    ver1 = form1.filter(u_user_id=id)
+    form2 = beneficiary_register.objects.get(u_phno=id)
+    return render(request,"timelineprocess.html",{'user1':form2,'ver':ver,'verr':ver1})
+
 
 def logout_page(request):
     logout(request)

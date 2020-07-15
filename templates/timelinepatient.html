@@ -1,5 +1,5 @@
-{% load static %}
 
+{% load static %}
 <!--
 =========================================================
 Material Dashboard - v2.1.2
@@ -17,7 +17,7 @@ The above copyright notice and this permission notice shall be included in all c
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/apple-icon.png' %}">
-  <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     Material Dashboard by Creative Tim
@@ -45,13 +45,13 @@ The above copyright notice and this permission notice shall be included in all c
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active  ">
-            <a style="background-color: #0a6ebd;" class="nav-link" href="{% url 'workerDash' %}">
+          <li class="nav-item  ">
+            <a class="nav-link" href="{% url 'workerDash' %}">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="{% url 'workerProfile' %}">
               <i class="material-icons">person</i>
               <p>User Profile</p>
@@ -70,13 +70,13 @@ The above copyright notice and this permission notice shall be included in all c
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="{% url 'visitapptid' %}">
+            <a class="nav-link" href="#">
               <i class="material-icons">bubble_chart</i>
               <p>Visitation</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'timelinepatient' %}">
+          <li class="nav-item  active ">
+            <a class="nav-link" href="{% url 'workerAppt' %}">
               <i class="material-icons">bubble_chart</i>
               <p>Timeline</p>
             </a>
@@ -89,8 +89,8 @@ The above copyright notice and this permission notice shall be included in all c
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Dashboard</a>
+          <div  class="navbar-wrapper">
+            <a class="navbar-brand" href="javascript:;">Timeline Chart</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -99,15 +99,7 @@ The above copyright notice and this permission notice shall be included in all c
             <span class="navbar-toggler-icon icon-bar"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end">
-            <form class="navbar-form">
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                  <i class="material-icons">search</i>
-                  <div class="ripple-container"></div>
-                </button>
-              </div>
-            </form>
+
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="javascript:;">
@@ -144,173 +136,171 @@ The above copyright notice and this permission notice shall be included in all c
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'logoutpage' %}">Log out</a>
+                  <a class="dropdown-item" href="#">Log out</a>
                 </div>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+      <br><br><br><br><br>
+      <div class="container-fluid">
+      <form class="navbar-form" action="timelineprocess" method="POST">
+        {% csrf_token %}
+        <div class="input-group no-border">
+          <input type="text" name="id" value="" class="form-control" placeholder="Search...">
+          <button type="submit" class="btn btn-white btn-round btn-just-icon">
+            <i class="material-icons">search</i>
+            <div class="ripple-container"></div>
+          </button>
+        </div>
+      </form>
+    </div>
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">content_copy</i>
-                  </div>
-                  <p class="card-category">User</p>
-                  <h4 class="card-title">ADD USER
-                   
-                  </h4>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                   
-                    <a href="{% url 'registerBen' %}">ADD USER</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">store</i>
-                  </div>
-                  <p class="card-category">USER</p>
-                  <h4 class="card-title">RESCHEDULE</h4>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                   <a href="{% url 'rescheduleRef' %}">RESCHEDULE</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">info_outline</i>
-                  </div>
-                  <p class="card-category">Fixed Issues</p>
-                  <h3 class="card-title">75</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">local_offer</i> Tracked from Github
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                  <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
-                  </div>
-                  <p class="card-category">Followers</p>
-                  <h3 class="card-title">+245</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">update</i> Just Updated
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-            <div class="col-lg-6 col-md-12">
+            <div class="col-md-8">
               <div class="card">
-                <div style="background-color: #0a6ebd;" class="card-header card-header-warning">
-                  <h4 class="card-title">Todays Appointments </h4>
-                  <p class="card-category">Appointments for the day</p>
+                <div style="background: #0a6ebd;" class="card-header card-header-primary">
+                  <h4 class="card-title">User Details</h4>
+                 
                 </div>
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead class="">
-                      <th>
-                        Date
-                      </th>
-                      <th>
-                        User ID
-                      </th>
-                      <th>
-                        Reference No
-                      </th>
-                      <th>
-                      AppoNo
-                      </th>
-                    </thead>
-                    <tbody>
-                      {% for i in ver %}
-                      <tr>
-                        <td>
-                          {{i.apdate}}
-                        </td>
-                        <td>
-                          {{i.u_user_id}} 
-                        </td>
-                        <td>
-                         {{i.apref}}
-                        </td>
-                        <td>
-                        {{i.apno}}
-                        </td>
-                        
-                      </tr>
-                      
-                      {% endfor %}
-                    </tbody>
-                  </table>
+                <div class="card-body">
+                 
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label class="bmd-label-floating"><h5>Name:</h5></label>
+                          {{user1.hw_fname}} {{user1.hw_sname}}
+                        </div>
+                      </div><br>
+                    </div>
+
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="bmd-label-floating"><h5>Phone No:</h5></label>
+                        {{user1.hw_phno}}
+                      </div>
+                    </div>
+                  </div>
+                
                 </div>
               </div>
             </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="card">
+                  <div style="background-color: #0a6ebd;" class="card-header card-header-warning">
+                    <h4 class="card-title">Appointment History </h4>
+                    <p class="card-category">Appointments History of the patient</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="">
+                        <th>
+                          Date
+                        </th>
+                        <th>
+                          Status
+                        </th>
+                        <th>
+                          Reference No
+                        </th>
+                        <th>
+                        AppoNo
+                        </th>
+                      </thead>
+                      <tbody>
+                        {% for i in ver %}
+                        <tr>
+                          <td>
+                            {{i.apdate}}
+                          </td>
+                          <td>
+                            {{i.apstatus}} 
+                          </td>
+                          <td>
+                           {{i.apref}}
+                          </td>
+                          <td>
+                          {{i.apno}}
+                          </td>
+                          
+                        </tr>
+                        
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-12">
+                <div class="card">
+                  <div style="background-color: #0a6ebd;" class="card-header card-header-warning">
+                    <h4 class="card-title">Health History </h4>
+                    <p class="card-category">Health history of the patient</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="">
+                        <th>
+                          Date
+                        </th>
+                        <th>
+                          BMI
+                        </th>
+                        <th>
+                          Height
+                        </th>
+                        <th>
+                        Weight
+                        </th>
+                        <th>
+                          BP 
+                        </th>
+                        <th>
+                       Worker ID
+                        </th>
+                      </thead>
+                      <tbody>
+                        {% for i in verr %}
+                        <tr>
+                          <td>
+                            {{i.bmdate}}
+                          </td>
+                          <td>
+                            {{i.currentbmi}} 
+                          </td>
+                          <td>
+                           {{i.bmheight}}
+                          </td>
+                          <td>
+                          {{i.bmweight}}
+                          </td>
+                          <td>
+                            {{i.bmblood}}
+                        </td>
+                        {{i.bmworker}}
+                        </tr>
+                        
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+<!--  ************************************************************************* -->
           </div>
         </div>
       </div>
-      <footer class="footer">
-        <div class="container-fluid">
-          <nav class="float-left">
-            <ul>
-              <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
-                </a>
-              </li>
-              <li>
-                <a href="https://creative-tim.com/presentation">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="http://blog.creative-tim.com">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a href="https://www.creative-tim.com/license">
-                  Licenses
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <div class="copyright float-right">
-            &copy;
-            <script>
-              document.write(new Date().getFullYear())
-            </script>, made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-          </div>
-        </div>
-      </footer>
+      
     </div>
   </div>
-
+  
   <!--   Core JS Files   -->
   <script src="{% static 'js/core/jquery.min.js' %}"></script>
   <script src="{% static 'js/core/popper.min.js' %}"></script>
@@ -523,13 +513,6 @@ The above copyright notice and this permission notice shall be included in all c
 
         });
       });
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
-
     });
   </script>
 </body>
