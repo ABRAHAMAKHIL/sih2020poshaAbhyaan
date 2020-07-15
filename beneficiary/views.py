@@ -19,6 +19,12 @@ def loginBen(request):
         if user:
             if user.is_active:
                 login(request,user)
+                cursor = connections['default'].cursor()
+                cursor.execute("SELECT u_user_id FROM beneficiary_userappointments WHERE u_user_id = %s", [username])
+                row = cursor.fetchone()
+                form1=str(row[0])
+               
+                request.session['u_user_id'] = form1
                 return HttpResponseRedirect(reverse('homeBen'))
             else:
                 return HttpResponse("Your account was inactive.")
@@ -61,15 +67,18 @@ def registerBen(request):
 
 @login_required(login_url='loginBen')  
 def homeBen(request):
+    phno = request.session.get('u_user_id')
+    print(phno)
     user1 = beneficiary_register.objects.get(u_phno = request.user)
-    context = {'user1':user1}
+    user2 = userappointments.objects.filter(u_user_id=phno)
+    context = {'user1':user1,'user2':user2}
     
     return render(request,"beneficiary_home.html",context)
 
 
 def logout_request(request):
     logout(request)
-    return HttpResponseRedirect(reverse('loginpage'))
+    return HttpResponseRedirect(reverse('loginBen'))
 @login_required(login_url='loginPage')
 
 def index(request):
