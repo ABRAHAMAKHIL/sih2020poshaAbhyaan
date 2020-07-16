@@ -45,19 +45,19 @@ The above copyright notice and this permission notice shall be included in all c
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item  ">
-            <a class="nav-link" href="{% url 'workerDash' %}">
+          <li class="nav-item ">
+            <a  class="nav-link" href="{% url 'workerDash' %}">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item ">
             <a class="nav-link" href="{% url 'workerProfile' %}">
               <i class="material-icons">person</i>
               <p>User Profile</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item   ">
             <a class="nav-link" href="{% url 'workerPlist' %}">
               <i class="material-icons">content_paste</i>
               <p>Patient List</p>
@@ -70,15 +70,21 @@ The above copyright notice and this permission notice shall be included in all c
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{% url 'visitapptid' %}">
               <i class="material-icons">bubble_chart</i>
               <p>Visitation</p>
             </a>
           </li>
-          <li class="nav-item  active ">
-            <a class="nav-link" href="{% url 'workerAppt' %}">
+          <li class="nav-item active ">
+            <a class="nav-link" href="{% url 'timelinepatient' %}">
               <i class="material-icons">bubble_chart</i>
               <p>Timeline</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'apptdetail' %}">
+              <i class="material-icons">bubble_chart</i>
+              <p>Appointment Search</p>
             </a>
           </li>
           
@@ -146,9 +152,10 @@ The above copyright notice and this permission notice shall be included in all c
       <br><br><br><br><br>
       <div class="container-fluid">
       <form class="navbar-form" action="timelineprocess" method="POST">
+
         {% csrf_token %}
         <div class="input-group no-border">
-          <input type="text" name="id" value="" class="form-control" placeholder="Search...">
+          <input type="text" name="id" class="form-control" placeholder="Search...">
           <button type="submit" class="btn btn-white btn-round btn-just-icon">
             <i class="material-icons">search</i>
             <div class="ripple-container"></div>
@@ -172,7 +179,7 @@ The above copyright notice and this permission notice shall be included in all c
                       <div class="col-md-5">
                         <div class="form-group">
                           <label class="bmd-label-floating"><h5>Name:</h5></label>
-                          {{user1.hw_fname}} {{user1.hw_sname}}
+                          {{user1.u_fname}} {{user1.u_sname}}
                         </div>
                       </div><br>
                     </div>
@@ -182,7 +189,7 @@ The above copyright notice and this permission notice shall be included in all c
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="bmd-label-floating"><h5>Phone No:</h5></label>
-                        {{user1.hw_phno}}
+                        {{user1.u_phno}}
                       </div>
                     </div>
                   </div>
@@ -283,7 +290,10 @@ The above copyright notice and this permission notice shall be included in all c
                           <td>
                             {{i.bmblood}}
                         </td>
-                        {{i.bmworker}}
+                        <td>
+                            {{i.bmworker}}
+                        </td>
+                       
                         </tr>
                         
                         {% endfor %}

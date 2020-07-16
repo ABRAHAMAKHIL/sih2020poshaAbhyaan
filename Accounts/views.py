@@ -151,6 +151,19 @@ def timelineprocess(request):
     form2 = beneficiary_register.objects.get(u_phno=id)
     return render(request,"timelineprocess.html",{'user1':form2,'ver':ver,'verr':ver1})
 
+@login_required(login_url='loginPage')  
+def apptdetail(request):
+
+   return render(request,"apptdetail.html")
+
+def apptprocess(request):
+    id=int(request.POST["id"])
+    ver = userappointments.objects.get(apref=id)
+    f1 = ver.u_user_id
+    form2 = beneficiary_register.objects.get(u_phno=f1)
+    return render(request,"apptprocess.html",{'user1':form2,'ver':ver})
+
+
 
 def logout_page(request):
     logout(request)

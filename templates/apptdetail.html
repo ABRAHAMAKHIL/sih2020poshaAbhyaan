@@ -1,20 +1,5 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% load static%}
-
+{% load static %}
 <!--
 =========================================================
 Material Dashboard - v2.1.2
@@ -32,7 +17,7 @@ The above copyright notice and this permission notice shall be included in all c
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/apple-icon.png' %}">
-  <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     Material Dashboard by Creative Tim
@@ -59,59 +44,59 @@ The above copyright notice and this permission notice shall be included in all c
           POSHAN ABHIYAN
         </a></div>
         <div class="sidebar-wrapper">
-          <ul class="nav">
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'workerDash' %}">
-                <i class="material-icons">dashboard</i>
-                <p>Dashboard</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'workerProfile' %}">
-                <i class="material-icons">person</i>
-                <p>User Profile</p>
-              </a>
-            </li>
-            <li class="nav-item active  ">
-              <a class="nav-link" href="{% url 'workerPlist' %}">
-                <i class="material-icons">content_paste</i>
-                <p>Patient List</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'workerAppt' %}">
-                <i class="material-icons">library_books</i>
-                <p>Appointments</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'visitapptid' %}">
-                <i class="material-icons">bubble_chart</i>
-                <p>Visitation</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'timelinepatient' %}">
-                <i class="material-icons">bubble_chart</i>
-                <p>Timeline</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'apptdetail' %}">
-                <i class="material-icons">bubble_chart</i>
-                <p>Appointment Search</p>
-              </a>
-            </li>
-            
-          </ul>
-        </div>
+            <ul class="nav">
+              <li class="nav-item   ">
+                <a class="nav-link" href="{% url 'workerDash' %}">
+                  <i class="material-icons">dashboard</i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'workerProfile' %}">
+                  <i class="material-icons">person</i>
+                  <p>User Profile</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'workerPlist' %}">
+                  <i class="material-icons">content_paste</i>
+                  <p>Patient List</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'workerAppt' %}">
+                  <i class="material-icons">library_books</i>
+                  <p>Appointments</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'visitapptid' %}">
+                  <i class="material-icons">bubble_chart</i>
+                  <p>Visitation</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'timelinepatient' %}">
+                  <i class="material-icons">bubble_chart</i>
+                  <p>Timeline</p>
+                </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'apptdetail' %}">
+                  <i class="material-icons">bubble_chart</i>
+                  <p>Appointment Search</p>
+                </a>
+              </li>
+              
+            </ul>
+          </div>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">User List List</a>
+          <div  class="navbar-wrapper">
+            <a class="navbar-brand" href="javascript:;">Search Appointment ID</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -120,15 +105,7 @@ The above copyright notice and this permission notice shall be included in all c
             <span class="navbar-toggler-icon icon-bar"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end">
-            <form class="navbar-form">
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                  <i class="material-icons">search</i>
-                  <div class="ripple-container"></div>
-                </button>
-              </div>
-            </form>
+
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="javascript:;">
@@ -172,125 +149,127 @@ The above copyright notice and this permission notice shall be included in all c
           </div>
         </div>
       </nav>
+      <br><br><br><br><br>
+      <div class="container-fluid">
+      <form class="navbar-form" action="apptprocess" method="POST">
+
+        {% csrf_token %}
+        <div class="input-group no-border">
+          <input type="text" name="id" class="form-control" placeholder="Search...">
+          <button type="submit" class="btn btn-white btn-round btn-just-icon">
+            <i class="material-icons">search</i>
+            <div class="ripple-container"></div>
+          </button>
+        </div>
+      </form>
+    </div>
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
               <div class="card">
                 <div style="background: #0a6ebd;" class="card-header card-header-primary">
-                  <h4 class="card-title ">Verified Users</h4>
-                  
+                  <h4 class="card-title">User Details</h4>
+                 
                 </div>
                 <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead class=" text-primary">
-                        <th>
-                          ID
-                        </th>
-                        <th>
-                          Name
-                        </th>
-                        <th>
-                          Pin Code
-                        </th>
-                        <th>
-                          District
-                        </th>
-                        <th>
-                          Age
-                        </th>
-                      </thead>
-                      <tbody>
-                        {% for i in ver %}
-                        <tr>
-                          <td>
-                            {{i.u_user}}
-                          </td>
-                          <td>
-                            {{i.u_fname}} {{i.u_sname}}
-                          </td>
-                          <td>
-                           {{i.u_pincode}}
-                          </td>
-                          <td>
-                          {{i.u_district}}
-                          </td>
-                          <td class="text-primary">
-                            {{i.u_user}}
-                          </td>
-                        </tr>
-                        
-                        {% endfor %}
-                       
-                        
-                      </tbody>
-                    </table>
+                 
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label class="bmd-label-floating"><h5>Name:</h5></label>
+                          {{user1.u_fname}} {{user1.u_sname}}
+                        </div>
+                      </div><br>
+                    </div>
+
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="bmd-label-floating"><h5>Phone No:</h5></label>
+                        {{user1.u_phno}}
+                      </div>
+                    </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="bmd-label-floating"><h5>Pincode:</h5></label>
+                        {{user1.u_pincode}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="bmd-label-floating"><h5>District:</h5></label>
+                        {{user1.u_district}}
+                      </div>
+                    </div>
+                  </div>
+                
+                
                 </div>
               </div>
             </div>
-            <div class="col-md-12">
-              <div class="card card-plain">
-                <div style="background: #0a6ebd;" class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"> Unverified Users</h4>
-                  
-                </div>
-                <div class="card-body">
+            <div class="col-lg-6 col-md-12">
+                <div class="card">
+                  <div style="background-color: #0a6ebd;" class="card-header card-header-warning">
+                    <h4 class="card-title">Appointment History </h4>
+                    <p class="card-category">Appointments History of the patient</p>
+                  </div>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead class="">
                         <th>
-                          ID
+                          Date
                         </th>
                         <th>
-                          Name
+                          Status
                         </th>
                         <th>
-                          Pin Code
+                          Reference No
                         </th>
                         <th>
-                        District
-                        </th>
-                        <th>
-                         Age
+                        AppoNo
                         </th>
                       </thead>
                       <tbody>
-                        {% for i in notver %}
                         <tr>
                           <td>
-                            {{i.u_user}}
+                            {{ver.apdate}}
                           </td>
                           <td>
-                            {{i.u_fname}} {{i.u_sname}}
+                            {{ver.apstatus}} 
                           </td>
                           <td>
-                           {{i.u_pincode}}
+                           {{ver.apref}}
                           </td>
                           <td>
-                          {{i.u_district}}
+                          {{ver.apno}}
                           </td>
-                          <td class="text-primary">
-                            {{i.u_user}}
-                          </td>
+                          
                         </tr>
-                        
-                        {% endfor %}
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-            </div>
+
+            
+
+<!--  ************************************************************************* -->
           </div>
         </div>
       </div>
-     
+      
     </div>
   </div>
-
+  
   <!--   Core JS Files   -->
   <script src="{% static 'js/core/jquery.min.js' %}"></script>
   <script src="{% static 'js/core/popper.min.js' %}"></script>
