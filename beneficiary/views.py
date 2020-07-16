@@ -197,12 +197,9 @@ def rescheduleRef(request):
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers']) 
 def rescheduleDetail(request):
-    refid=int(request.POST["userid"])
-    
+    refid=str(request.POST["userid"])
     val1 = str(request.user)
     cursor1 = connections['default'].cursor()
-    
-    
     cursor1.execute("UPDATE beneficiary_userappointments SET apreceived = %s WHERE apref = %s", [val1,refid])
     cursor = connections['default'].cursor()
     cursor.execute("SELECT u_user_id,apdate FROM beneficiary_userappointments WHERE apref = %s", [refid])
@@ -217,8 +214,35 @@ def rescheduleDetail(request):
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers']) 
 def rescheduleprocess(request):
-    refid=int(request.POST["refid"])
+    refid=str(request.POST["refid"])
     newdate= str(request.POST["newdate"])
     cursor1 = connections['default'].cursor()
     cursor1.execute("UPDATE beneficiary_userappointments SET apdate = %s WHERE apref = %s", [newdate,refid])
     return render(request,'dashboard.html')
+
+
+@login_required(login_url='loginBen')
+def beneficiaryhealth(request):
+    phno = request.session.get('u_user_id')
+    user2 = userbmi.objects.all()
+    verr = user2.filter(u_user_id=phno)
+    
+    context = {'verr':verr}
+    
+    return render(request,'beneficiaryhealth.html',context)
+
+@login_required(login_url='loginBen')
+def beneficiaryappt(request):
+    phno = request.session.get('u_user_id')
+    user2 = userappointments.objects.all()
+    ven = user2.filter(u_user_id=phno)
+    ver=ven.filter(apstatus=True)
+    notver=ven.filter(apstatus=False)
+
+    context = {'ver':ver,'notver':notver}
+    return render(request,'beneficiary_appts.html',context)
+
+
+def logoutpage(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('loginBen'))

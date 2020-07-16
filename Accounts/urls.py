@@ -14,4 +14,7 @@ urlpatterns = [
     path("timelineprocess",views.timelineprocess,name="timelineprocess"),
     path("apptdetail",views.apptdetail,name="apptdetail"),
     path("apptprocess",views.apptprocess,name="apptprocess"),
+    path("manualappt",views.manualappt,name="manualappt"),
+    path('gentimeline1',views.gentimeline1,name='gentimeline1'),
+
 ]

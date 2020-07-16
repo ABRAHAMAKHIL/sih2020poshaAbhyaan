@@ -114,7 +114,8 @@ def workerDash(request):
     context = {'form':form,'ver':ver}
     return render(request,"dashboard.html",context)
 
-@login_required(login_url='loginPage')  
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers'])    
 def workerPlist(request):
     form = beneficiary_register.objects.all()
     ver = form.filter(u_status=True)
@@ -122,7 +123,8 @@ def workerPlist(request):
     context = {'form':form,'ver':ver,'notver':notver}
     return render(request,"tables.html",context)
 
-@login_required(login_url='loginPage')  
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers'])    
 def workerAppt(request):
     form = userappointments.objects.all()
     hwno = request.session.get('hw_pincode')
@@ -137,11 +139,15 @@ def workerAppt(request):
     context = {'form':form,'ver':ver,'notver':notver}
     return render(request,"appointments.html",context)
    
-@login_required(login_url='loginPage')  
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers'])    
 def timelinepatient(request):
 
    return render(request,"timelinepatient.html")
 
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
 def timelineprocess(request):
     id=int(request.POST["id"])
     form = userappointments.objects.all()
@@ -151,11 +157,14 @@ def timelineprocess(request):
     form2 = beneficiary_register.objects.get(u_phno=id)
     return render(request,"timelineprocess.html",{'user1':form2,'ver':ver,'verr':ver1})
 
-@login_required(login_url='loginPage')  
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
 def apptdetail(request):
 
    return render(request,"apptdetail.html")
 
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers'])
 def apptprocess(request):
     id=int(request.POST["id"])
     ver = userappointments.objects.get(apref=id)
@@ -170,5 +179,20 @@ def logout_page(request):
     return HttpResponseRedirect(reverse('loginPage'))
 
 
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers'])  
+def manualappt(request):
+    return render(request,'manualappt.html')
 
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers'])  
+def gentimeline1(request):
+    id=int(request.POST["userid"])
+    date=str(request.POST["date"])
+    pincode=int(request.POST["pincode"])
+    assign=int(request.POST["assigned"])
+    a=date+str(id)
 
+    cursor = connections['default'].cursor()
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode) VALUES( %s , %s ,%s,%s,%s)", [id, date,a,pincode,assign])
+    return HttpResponseRedirect(reverse('workerDash'))

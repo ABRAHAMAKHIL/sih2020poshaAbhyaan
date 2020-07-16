@@ -17,6 +17,10 @@ urlpatterns = [
     path('rescheduleRef',views.rescheduleRef,name='rescheduleRef'),
     path('rescheduleDetail',views.rescheduleDetail,name='rescheduleDetail'),
     path('rescheduleprocess',views.rescheduleprocess,name='rescheduleprocess'),
+    path('beneficiaryappt',views.beneficiaryappt,name='beneficiaryappt'),
+    path('beneficiaryhealth',views.beneficiaryhealth,name='beneficiaryhealth'),
+    path("logoutpage",views.logoutpage,name="logoutpage"),
+
 ]
     
   
