@@ -132,15 +132,17 @@ input[type=text]:focus {
   }
     </style>
 </head>
+{% include 'hh.html' %}
+<br><br><br>
+<body style="background-color: #0a6ebd;align-items:center;">
 
-<body>
 	
 <div class="form-style-10">
-    <h1>User Sign Up<span></span></h1>
+    <h1>Manual Appointment<span></span></h1>
     <form method="POST" action="gentimeline1">
 
         {% csrf_token %}
-		<div class="section"><span>1</span>Personal Details
+		<div class="section"><span>1</span>Enter the Details
 		
 		</div>
 		<div class="inner-wrap">

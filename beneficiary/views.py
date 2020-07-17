@@ -158,7 +158,7 @@ def visitapptid(request):
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers']) 
 def userbmiapptid(request):
-    refid=int(request.POST["userid"])
+    refid=str(request.POST["userid"])
     val=True
     val1 = str(request.user)
     cursor1 = connections['default'].cursor()
