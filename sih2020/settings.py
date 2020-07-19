@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'sih2020.wsgi.application'
 DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.mysql',
-'NAME': 'augustPoshan',
+'NAME': 'sih2020',
 'USER': 'root',
 'PASSWORD': "",
 'HOST' : "127.0.0.1",
