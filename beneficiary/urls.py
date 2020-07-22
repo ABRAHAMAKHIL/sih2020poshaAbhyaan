@@ -19,6 +19,9 @@ urlpatterns = [
     path('rescheduleprocess',views.rescheduleprocess,name='rescheduleprocess'),
     path('beneficiaryappt',views.beneficiaryappt,name='beneficiaryappt'),
     path('beneficiaryhealth',views.beneficiaryhealth,name='beneficiaryhealth'),
+    path('verifyRef',views.verifyRef,name='verifyRef'),
+    path('verifyDetail',views.verifyDetail,name='verifyDetail'),
+    path('verifyprocess',views.verifyprocess,name='verifyprocess'),
     path("logoutpage",views.logoutpage,name="logoutpage"),
 
 ]

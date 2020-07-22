@@ -246,3 +246,45 @@ def beneficiaryappt(request):
 def logoutpage(request):
     logout(request)
     return HttpResponseRedirect(reverse('loginBen'))
+
+
+
+
+
+
+
+
+
+
+
+
+@allowed_users(allowed_roles=['healthworkers']) 
+def verifyRef(request):
+     return render(request,'verifyRef.html')
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def verifyDetail(request):
+    userid =str(request.POST["userid"])
+    val1 = beneficiary_register.objects.get(u_phno=userid)
+    
+    cursor = connections['default'].cursor()
+    cursor.execute("SELECT u_fname FROM beneficiary_beneficiary_register WHERE u_phno = %s", [userid])
+   
+    row = cursor.fetchone()
+    form1=str(row[0])
+    form2 = row[0]
+    form2 = str(form2)
+   
+    return render(request,'verifyDetail.html',{'useridpass':form1,'form2':form2,'refid':userid})
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['healthworkers']) 
+def verifyprocess(request):
+    userid=str(request.POST["userid"])
+    status= str(request.POST["status"])
+    cursor1 = connections['default'].cursor()
+    cursor1.execute("UPDATE beneficiary_beneficiary_register SET u_status = %s WHERE u_phno = %s", [status,userid])
+    return render(request,'dashboard.html')
+
+
