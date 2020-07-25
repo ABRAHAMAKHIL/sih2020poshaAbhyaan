@@ -202,14 +202,16 @@ def rescheduleDetail(request):
     cursor1 = connections['default'].cursor()
     cursor1.execute("UPDATE beneficiary_userappointments SET apreceived = %s WHERE apref = %s", [val1,refid])
     cursor = connections['default'].cursor()
-    cursor.execute("SELECT u_user_id,apdate FROM beneficiary_userappointments WHERE apref = %s", [refid])
+    s = 0
+    cursor.execute("SELECT u_user_id,apdate,apstatus FROM beneficiary_userappointments WHERE apref = %s", [refid])
    
     row = cursor.fetchone()
     form1=str(row[0])
     form2 = row[1]
     form2 = str(form2)
-   
-    return render(request,'rescheduleDetail.html',{'useridpass':form1,'form2':form2,'refid':refid})
+    form3 =row[2]
+    print(form3)
+    return render(request,'rescheduleDetail.html',{'useridpass':form1,'form2':form2,'refid':refid,'form3':form3})
 
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers']) 
