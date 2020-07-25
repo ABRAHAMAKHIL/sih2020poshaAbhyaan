@@ -11,6 +11,7 @@ class beneficiary_register(models.Model):
     u_addr = models.CharField(max_length=200,default=None)
     u_district = models.CharField(max_length=20,default=None)
     u_phno = models.CharField(max_length=13,default=None)
+    u_DOB = models.DateField(null=True)
     u_status = models.BooleanField(null=True,blank=True,default=False)
     u_verified = models.CharField(max_length=13,null=True,blank=True)
    

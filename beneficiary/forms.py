@@ -1,11 +1,15 @@
 from django import forms
 from .models import *
 from django.contrib.auth.models import User
+from django.contrib.admin.widgets import AdminDateWidget
+from django.forms.fields import DateField
 
 class beneficiary_info(forms.ModelForm):
+    u_DOB = forms.DateField(widget=AdminDateWidget)
+
     class Meta:
         model = beneficiary_register
-        fields = ('u_fname','u_sname','u_adhar','u_addr','u_pincode','u_phno','u_district','u_status','u_verified')
+        fields = ('u_fname','u_sname','u_adhar','u_addr','u_DOB','u_pincode','u_phno','u_district','u_status','u_verified')
    
        
 class UserForm(forms.ModelForm):
