@@ -42,15 +42,23 @@ def registerBen(request):
         user_form = UserForm(data=request.POST)
         Create_user = beneficiary_info(data=request.POST)
         if user_form.is_valid() and Create_user.is_valid():
-            user = user_form.save()
+            user = user_form.save(commit=False)
+            cruser = Create_user.save(commit=False)
+
+            cruser.u_user = user
+            cruser.u_verified = request.user
+            if cruser.u_type == 1 :
+                type = 'M'
+            if cruser.u_type == 0 :
+                type='C'
+            cruser.u_phno = cruser.u_phone + type
+            
+            user.username = cruser.u_phno
             user.set_password(user.password)
             user.save()
-            cruser = Create_user.save(commit=False)
-            cruser.u_user = user
-            cruser.u_verified = request.user;
             cruser.save()
-
-            request.session['u_phno'] = cruser.u_phno;
+            
+            request.session['u_phno'] = cruser.u_phno
 
             registered = True   
             return HttpResponseRedirect(reverse('userbmi'))
@@ -112,7 +120,7 @@ def timelinegen(request):
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers'])  
 def gentimeline(request):
-    id=int(request.POST["userid"])
+    id=str(request.POST["userid"])
     request.session['u_phno'] = id
     z = str(request.session.get('hw_pincode'))
     v = str(request.user)
@@ -122,6 +130,7 @@ def gentimeline(request):
     x1=1
     x2=2
     x3=3
+    aptype=True
     a = datetime.date(date1).strftime("%Y%m%d")
     b = datetime.date(date2).strftime("%Y%m%d")
     c = datetime.date(date3).strftime("%Y%m%d")
@@ -129,9 +138,10 @@ def gentimeline(request):
     b = b+str(id)
     c = c+str(id)
     cursor = connections['default'].cursor()
-    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode) VALUES( %s , %s ,%s,%s,%s,%s)", [id, date1,x1,a,v,z])
-    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode) VALUES( %s , %s ,%s,%s,%s,%s)", [id, date2,x2,b,v,z])
-    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode) VALUES( %s , %s ,%s,%s,%s,%s)", [id, date3,x3,c,v,z])
+    apstatus = False
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s)", [id, date1,x1,a,v,z,aptype,apstatus])
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s)", [id, date2,x2,b,v,z,aptype,apstatus])
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s)", [id, date3,x3,c,v,z,aptype,apstatus])
 
     return HttpResponseRedirect(reverse('timelinepage'))
 
@@ -203,8 +213,7 @@ def rescheduleDetail(request):
     cursor1.execute("UPDATE beneficiary_userappointments SET apreceived = %s WHERE apref = %s", [val1,refid])
     cursor = connections['default'].cursor()
     s = 0
-    cursor.execute("SELECT u_user_id,apdate,apstatus FROM beneficiary_userappointments WHERE apref = %s", [refid])
-   
+    cursor.execute("SELECT u_user_id,apdate,apstatus FROM beneficiary_userappointments WHERE apref = %s", [refid])    
     row = cursor.fetchone()
     form1=str(row[0])
     form2 = row[1]

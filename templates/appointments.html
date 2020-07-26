@@ -172,6 +172,9 @@
                         <th>
                         Appointment Number
                         </th>
+                        <th>
+                          Type
+                        </th>
                       </thead>
                       <tbody>
                         {% for i in ver %}
@@ -187,6 +190,9 @@
                           </td>
                           <td>
                           {{i.apno}}
+                          </td>
+                          <td>
+                            {{i.aptype}}
                           </td>
                         </tr>
                         
@@ -217,7 +223,10 @@
                           Reference Number
                         </th>
                         <th>
-                        Appointment Number
+                        Appointment No
+                        </th>
+                        <th>
+                        Type
                         </th>
                       </thead>
                       <tbody>
@@ -235,6 +244,9 @@
                           <td>
                           {{i.apno}}
                           </td>
+                          <td>
+                            {{i.aptype}}
+                            </td>
                         </tr>
                         
                         {% endfor %}

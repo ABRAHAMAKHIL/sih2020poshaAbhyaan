@@ -13,6 +13,7 @@ from . models import worker_register
 from .forms import UserForm,hw_info
 from datetime import timedelta
 from django.contrib.auth import authenticate, login, logout
+from django.utils.dateparse import parse_date
 # Create your views here
 def registerPage(request):
     registered = False
@@ -187,12 +188,34 @@ def manualappt(request):
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers'])  
 def gentimeline1(request):
-    id=int(request.POST["userid"])
+    id=str(request.POST["userid"])
     date=str(request.POST["date"])
     pincode=int(request.POST["pincode"])
     assign=int(request.POST["assigned"])
+    atype=int(request.POST["type"])
+    if atype==1:
+        aptype=True
+    if atype== 0:
+        aptype=False
+    apstatus = False
     a=date+str(id)
+    currentdate =parse_date(date)
+    c1= currentdate - timedelta(days=7)
+    c2= currentdate + timedelta(days=7)
 
-    cursor = connections['default'].cursor()
-    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode) VALUES( %s , %s ,%s,%s,%s)", [id, date,a,pincode,assign])
-    return HttpResponseRedirect(reverse('workerDash'))
+    if aptype==False:
+        cursor = connections['default'].cursor()
+        cursor.execute("SELECT apdate FROM beneficiary_userappointments WHERE aptype=%s AND apdate BETWEEN %s AND %s", [aptype,c1,c2])
+        row = cursor.fetchone()
+        if row[0]:
+            ver = userappointments.objects.filter(apdate__range=(c1, c2),aptype = aptype )
+            return render(request,"nonutrition.html",{'ver':ver})
+        else:
+            cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, date,a,pincode,assign,aptype,apstatus])
+            return HttpResponseRedirect(reverse('workerDash'))
+
+    else:
+        cursor = connections['default'].cursor()
+        cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, date,a,pincode,assign,aptype,apstatus])
+        return HttpResponseRedirect(reverse('workerDash'))
+   

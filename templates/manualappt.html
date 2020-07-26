@@ -150,7 +150,12 @@ input[type=text]:focus {
            <label>Date <input name="date" type="date" ></label>
            <label>Appincode<input name="pincode" type="text" ></label>
            <label>Asigned <input name="assigned" value="{{request.user}} "type="text" ></label>
-                     
+           <label>Type
+				<select name="type" id="cars">
+					<option value="1" >Medicine</option>
+					<option value="0" >Nutrition</option>
+				</select> 
+			</label>          
         </div>
 
          <input type="submit" name="Submit" value="Add"/>

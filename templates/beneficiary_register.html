@@ -131,7 +131,7 @@ input[type=text]:focus {
     </style>
 </head>
 {% include 'hh.html' %}
-<br><br></br>
+<br><br>
 <body style="background-color: #0a6ebd;" >
 	
 	
@@ -148,11 +148,13 @@ input[type=text]:focus {
             {{Create_user.u_fname}} </label>
            <label>Last Name {{Create_user.u_sname}}</label>
            <label>Aadhar Card No {{Create_user.u_adhar}}</label>
-		   <label>Phone Number {{Create_user.u_phno}}</label>
+		   <label>Phone Number {{Create_user.u_phone}}</label>
+			<label>{{Create_user.u_phno}}</label>	
+		   <label>Mother ? {{Create_user.u_type}}</label>
 		   <label>STATUS {{Create_user.u_status}}</label>
 		   <label>DOB {{Create_user.u_DOB}}</label>
-           <label>VERIFIED <h2>{{request.user}}</h2></label>
-           <label>Repeat Phone Number {{user_form.username}}</label>
+		   <label>VERIFIED <h2>{{request.user}}</h2></label>
+		   <label>Username {{user_form.username}}</label>
            <label>Password {{user_form.password}}</label>
            
         </div>

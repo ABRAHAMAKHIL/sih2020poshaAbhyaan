@@ -9,14 +9,15 @@ class beneficiary_info(forms.ModelForm):
 
     class Meta:
         model = beneficiary_register
-        fields = ('u_fname','u_sname','u_adhar','u_addr','u_DOB','u_pincode','u_phno','u_district','u_status','u_verified')
-   
+        fields = ('u_fname','u_sname','u_adhar','u_addr','u_DOB','u_type','u_pincode','u_phno','u_phone','u_district','u_status','u_verified')
+        widgets = {'u_phno': forms.HiddenInput()} 
        
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     class Meta():
         model = User
         fields = ('username','password')
+        
         
 class usr(forms.ModelForm):
     class Meta:
