@@ -47,12 +47,8 @@ def registerBen(request):
 
             cruser.u_user = user
             cruser.u_verified = request.user
-            if cruser.u_type == 1 :
-                type = 'M'
-            if cruser.u_type == 0 :
-                type='C'
-            cruser.u_phno = cruser.u_phone + type
-            
+            random_number = User.objects.make_random_password(length=6, allowed_chars='123456789')
+            cruser.u_phno = random_number
             user.username = cruser.u_phno
             user.set_password(user.password)
             user.save()

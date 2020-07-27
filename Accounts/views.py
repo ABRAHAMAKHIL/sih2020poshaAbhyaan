@@ -119,6 +119,8 @@ def workerDash(request):
 @allowed_users(allowed_roles=['healthworkers'])    
 def workerPlist(request):
     form = beneficiary_register.objects.all()
+    
+
     ver = form.filter(u_status=True)
     notver = form.filter(u_status=False)
     context = {'form':form,'ver':ver,'notver':notver}
@@ -128,6 +130,7 @@ def workerPlist(request):
 @allowed_users(allowed_roles=['healthworkers'])    
 def workerAppt(request):
     form = userappointments.objects.all()
+    
     hwno = request.session.get('hw_pincode')
     ver = form.filter(apdate=date.today(),apPincode = hwno )
    
@@ -217,11 +220,11 @@ def gentimeline1(request):
             ver = userappointments.objects.filter(apdate__range=(c1, c2),aptype = aptype ,u_user_id = id)
             return render(request,"nonutrition.html",{'ver':ver})
         else:
-            cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, datez,a,pincode,assign,aptype,apstatus])
+            cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, datez,a,assign,pincode,aptype,apstatus])
             return HttpResponseRedirect(reverse('workerDash'))
 
     else:
         cursor = connections['default'].cursor()
-        cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, datez,a,pincode,assign,aptype,apstatus])
+        cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, datez,a,assign,pincode,aptype,apstatus])
         return HttpResponseRedirect(reverse('workerDash'))
    
