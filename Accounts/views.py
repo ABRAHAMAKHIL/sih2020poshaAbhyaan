@@ -189,7 +189,7 @@ def manualappt(request):
 @allowed_users(allowed_roles=['healthworkers'])  
 def gentimeline1(request):
     id=str(request.POST["userid"])
-    date=str(request.POST["date"])
+    datez=request.POST["date"]
     pincode=int(request.POST["pincode"])
     assign=int(request.POST["assigned"])
     atype=int(request.POST["type"])
@@ -198,24 +198,30 @@ def gentimeline1(request):
     if atype== 0:
         aptype=False
     apstatus = False
-    a=date+str(id)
-    currentdate =parse_date(date)
+    currentdate =parse_date(datez)
+    print(currentdate)
+    
+   
     c1= currentdate - timedelta(days=7)
     c2= currentdate + timedelta(days=7)
+    print('################')
+    print(c1)
+    print(c2)
+    a=datez.replace('-', '')+str(id)
 
     if aptype==False:
         cursor = connections['default'].cursor()
-        cursor.execute("SELECT apdate FROM beneficiary_userappointments WHERE aptype=%s AND apdate BETWEEN %s AND %s", [aptype,c1,c2])
+        cursor.execute("SELECT apdate FROM beneficiary_userappointments WHERE aptype=%s AND u_user_id = %s AND apdate BETWEEN %s AND %s", [aptype,id,c1,c2])
         row = cursor.fetchone()
-        if row[0]:
-            ver = userappointments.objects.filter(apdate__range=(c1, c2),aptype = aptype )
+        if row:
+            ver = userappointments.objects.filter(apdate__range=(c1, c2),aptype = aptype ,u_user_id = id)
             return render(request,"nonutrition.html",{'ver':ver})
         else:
-            cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, date,a,pincode,assign,aptype,apstatus])
+            cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, datez,a,pincode,assign,aptype,apstatus])
             return HttpResponseRedirect(reverse('workerDash'))
 
     else:
         cursor = connections['default'].cursor()
-        cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, date,a,pincode,assign,aptype,apstatus])
+        cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, datez,a,pincode,assign,aptype,apstatus])
         return HttpResponseRedirect(reverse('workerDash'))
    
