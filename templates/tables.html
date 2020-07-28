@@ -162,9 +162,15 @@
                           <td>
                             {{i.u_DOB}}
                           </td>
+                          {% if i.u_type == True %}
                           <td>
-                            {{i.u_type}}
+                            Mother
                           </td>
+                          {% else %}
+                          <td>
+                            Child
+                          </td>
+                          {% endif %}
                         </tr>
                         
                         {% endfor %}
@@ -223,9 +229,15 @@
                           <td >
                             {{i.u_DOB}}
                           </td>
-                          <td >
-                            {{i.u_type}}
+                          {% if i.u_type == True %}
+                          <td>
+                            Mother
                           </td>
+                          {% else %}
+                          <td>
+                            Child
+                          </td>
+                          {% endif %}
                         </tr>
                         
                         {% endfor %}

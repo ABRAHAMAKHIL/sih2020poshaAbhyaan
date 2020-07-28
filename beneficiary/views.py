@@ -94,9 +94,12 @@ def index(request):
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers']) 
 def displaybmi(request):
-    w=int(request.POST["bmweight"])
-    h=int(request.POST["bmheight"])
-    bmi=h*w
+    w=float(request.POST["bmweight"])
+    h=float(request.POST["bmheight"])
+    z=h/100
+    z1=w
+    bb=z1/((z)**2)
+    bmi = round(bb, 2)
     bid=request.session.get('u_phno')
     date=(request.POST["bmdate"])
     blood=float(request.POST["bmblood"])
@@ -181,9 +184,12 @@ def userbmiapptid(request):
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers']) 
 def displayappt(request):
-    w=int(request.POST["bmweight"])
-    h=int(request.POST["bmheight"])
-    bmi=h*w
+    w=float(request.POST["bmweight"])
+    h=float(request.POST["bmheight"])
+    z=h/100
+    z1=w
+    bb=z1/((z)**2)
+    bmi = round(bb, 2)
     bid=request.session.get('u_phno')
     date=(request.POST["bmdate"])
     blood=float(request.POST["bmblood"])
@@ -232,7 +238,7 @@ def rescheduleprocess(request):
 def beneficiaryhealth(request):
     phno = request.session.get('u_user_id')
     user2 = userbmi.objects.all()
-    verr = user2.filter(u_user_id=phno)
+    verr = user2.filter(u_user_id=phno).order_by('apdate')
     
     context = {'verr':verr}
     
@@ -242,9 +248,10 @@ def beneficiaryhealth(request):
 def beneficiaryappt(request):
     phno = request.session.get('u_user_id')
     user2 = userappointments.objects.all()
-    ven = user2.filter(u_user_id=phno)
+    ven = user2.filter(u_user_id=phno).order_by('apdate')
     ver=ven.filter(apstatus=True)
     notver=ven.filter(apstatus=False)
+   
 
     context = {'ver':ver,'notver':notver}
     return render(request,'beneficiary_appts.html',context)

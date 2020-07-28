@@ -220,9 +220,16 @@
                           <td>
                           {{ver.apno}}
                           </td>
+                          {% if ver.aptype == True %}
                           <td>
-                            {{ver.aptype}}
+                           Medicine
                           </td>
+                          {% endif %}
+                          {% if ver.aptype == False %}
+                          <td>
+                           Nutrition
+                          </td>
+                          {% endif %}
                           
                         </tr>
                       </tbody>

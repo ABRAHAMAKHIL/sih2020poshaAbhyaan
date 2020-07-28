@@ -185,7 +185,12 @@ The above copyright notice and this permission notice shall be included in all c
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="bmd-label-floating"><h5>Type:</h5></label>
-                        {{user1.u_type}}
+                        {% if user1.u_type == True %}
+                        Mother 
+                        {% endif %}                          
+                        {% if user1.u_type == False %}
+                         Nutrition
+                        {% endif %}
                       </div>
                     </div>
                   </div>
@@ -236,9 +241,15 @@ The above copyright notice and this permission notice shall be included in all c
                           <td>
                           {{i.apno}}
                           </td>
+                          {% if i.aptype == True %}
                           <td>
-                            {{i.aptype}}
+                           Medicine
                           </td>
+                          {% else %}
+                          <td>
+                           Nutrition
+                          </td>
+                          {% endif %}
                           
                         </tr>
                         

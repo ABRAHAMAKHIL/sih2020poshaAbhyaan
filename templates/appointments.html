@@ -155,9 +155,15 @@
                           <td>
                           {{i.apno}}
                           </td>
+                          {% if i.aptype == True %}
                           <td>
-                            {{i.aptype}}
+                           Medicine
                           </td>
+                          {% else %}
+                          <td>
+                           Nutrition
+                          </td>
+                          {% endif %}
                         </tr>
                         
                         {% endfor %}
@@ -208,9 +214,15 @@
                           <td>
                           {{i.apno}}
                           </td>
+                          {% if i.aptype == True %}
                           <td>
-                            {{i.aptype}}
-                            </td>
+                           Medicine
+                          </td>
+                          {% else %}
+                          <td>
+                           Nutrition
+                          </td>
+                          {% endif %}
                         </tr>
                         
                         {% endfor %}

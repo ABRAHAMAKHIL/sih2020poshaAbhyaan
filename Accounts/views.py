@@ -110,7 +110,7 @@ def workerProfile(request):
 def workerDash(request):
     form = userappointments.objects.all()
     hwno = request.session.get('hw_pincode')
-    ver = form.filter(apdate=date.today(),apPincode = hwno )
+    ver = form.filter(apdate=date.today(),apPincode = hwno).order_by('apdate')
     
     context = {'form':form,'ver':ver}
     return render(request,"dashboard.html",context)
@@ -132,12 +132,12 @@ def workerAppt(request):
     form = userappointments.objects.all()
     
     hwno = request.session.get('hw_pincode')
-    ver = form.filter(apdate=date.today(),apPincode = hwno )
+    ver = form.filter(apdate=date.today(),apPincode = hwno ).order_by('apdate')
    
     datez=date.today()+timedelta(days=1)
     date1= datez+ timedelta(days=14)
 
-    notver = userappointments.objects.filter(apdate__range=(datez, date1),apPincode = hwno )
+    notver = userappointments.objects.filter(apdate__range=(datez, date1),apPincode = hwno ).order_by('apdate')
 
     #notver = form1.filter(apdate=date.month())
     context = {'form':form,'ver':ver,'notver':notver}
@@ -155,9 +155,9 @@ def timelinepatient(request):
 def timelineprocess(request):
     id=int(request.POST["id"])
     form = userappointments.objects.all()
-    ver = form.filter(u_user_id=id)
+    ver = form.filter(u_user_id=id).order_by('apdate')
     form1 = userbmi.objects.all()
-    ver1 = form1.filter(u_user_id=id)
+    ver1 = form1.filter(u_user_id=id).order_by('bmdate')
     form2 = beneficiary_register.objects.get(u_phno=id)
     return render(request,"timelineprocess.html",{'user1':form2,'ver':ver,'verr':ver1})
 

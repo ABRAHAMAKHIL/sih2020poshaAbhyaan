@@ -162,7 +162,16 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="bmd-label-floating"><h5>Type:</h5></label>
-                        {{user1.u_type}}
+                        {% if user1.u_type == True %}
+                          <td>
+                           Mother 
+                          </td>
+                          {% endif %}
+                          {% if user1.u_type == False %}
+                          <td>
+                           Child
+                          </td>
+                          {% endif %}
                       </div>
                     </div>
                   </div>
