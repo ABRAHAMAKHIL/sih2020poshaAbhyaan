@@ -45,6 +45,7 @@ class userappointments(models.Model):
     apstatus = models.BooleanField(blank=True,default=False)
     apref = models.CharField(max_length=50,null=True)
     aptype = models.BooleanField(blank=True,default=False)
+    apPhone = models.CharField(null=True,max_length=10)
 
 
 

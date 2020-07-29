@@ -14,6 +14,7 @@ from .forms import UserForm,hw_info
 from datetime import timedelta
 from django.contrib.auth import authenticate, login, logout
 from django.utils.dateparse import parse_date
+from twilio.rest import Client
 # Create your views here
 def registerPage(request):
     registered = False
@@ -196,6 +197,7 @@ def gentimeline1(request):
     pincode=int(request.POST["pincode"])
     assign=int(request.POST["assigned"])
     atype=int(request.POST["type"])
+    phone=str(request.POST["phone"])
     if atype==1:
         aptype=True
     if atype== 0:
@@ -220,12 +222,12 @@ def gentimeline1(request):
             ver = userappointments.objects.filter(apdate__range=(c1, c2),aptype = aptype ,u_user_id = id)
             return render(request,"nonutrition.html",{'ver':ver})
         else:
-            cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, datez,a,assign,pincode,aptype,apstatus])
+            cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus,apPhone) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s)", [id, datez,a,assign,pincode,aptype,apstatus,phone])
             return HttpResponseRedirect(reverse('workerDash'))
 
     else:
         cursor = connections['default'].cursor()
-        cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s)", [id, datez,a,assign,pincode,aptype,apstatus])
+        cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apref,apassign,apPincode,aptype,apstatus,apPhone) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s)", [id, datez,a,assign,pincode,aptype,apstatus,phone])
         return HttpResponseRedirect(reverse('workerDash'))
    
 def absent(request):
@@ -243,3 +245,53 @@ def absent(request):
     #notver = form1.filter(apdate=date.month())
     context = {'form':form,'notver':notver}
     return render(request,"absent.html",context)
+
+def localsms(request):
+        form = userappointments.objects.all()
+        hwno = request.session.get('hw_pincode')
+        tommorow = date.today()+timedelta(days=1)
+        ver = form.filter(apdate=tommorow,apPincode=hwno)
+        account_sid = 'AC3239aa7e879998bb1ebb7be3a1a497fe'
+        auth_token = 'dacfe22a39522af85359b85df0b81eb7'
+        client = Client(account_sid, auth_token)
+        for i in ver:
+
+
+            message = client.messages \
+                            .create(
+                                body="Hey " +i.u_user_id+" Please attend you appointment with id: "+ i.apref+" for the date: "+ str(i.apdate)+" Registered at: "+ str(i.apPhone),
+                                from_='+12058529824',
+                                to="+91"+i.apPhone
+                            )
+
+            print(message.sid)
+
+
+        return HttpResponseRedirect(reverse('workerDash'))
+
+
+
+
+
+def localsms1(request):
+        form = userappointments.objects.all()
+        hwno = request.session.get('hw_pincode')
+        tommorow = date.today()
+        ver = form.filter(apdate=tommorow,apPincode=hwno,apstatus=False)
+        account_sid = 'AC3239aa7e879998bb1ebb7be3a1a497fe'
+        auth_token = 'dacfe22a39522af85359b85df0b81eb7'
+        client = Client(account_sid, auth_token)
+        for i in ver:
+
+
+            message = client.messages \
+                            .create(
+                                body="Hey " +i.u_user_id+" You missed your appointment with id: "+ i.apref+" for the date: "+ str(i.apdate)+" Registered at: "+ str(i.apPhone),
+                                from_='+12058529824',
+                                to="+91"+i.apPhone
+                            )
+
+            print(message.sid)
+
+
+        return HttpResponseRedirect(reverse('workerDash'))

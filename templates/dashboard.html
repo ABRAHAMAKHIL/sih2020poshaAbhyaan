@@ -121,6 +121,8 @@ The above copyright notice and this permission notice shall be included in all c
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'localsms1' %}">Absent</a>
+                  <a class="dropdown-item" href="{% url 'localsms' %}">Notify</a>
                   <a class="dropdown-item" href="{% url 'logoutpage' %}">Log out</a>
                 </div>
               </li>
@@ -134,9 +136,11 @@ The above copyright notice and this permission notice shall be included in all c
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
+                <div class="card-header card-header-info card-header-icon">
                   <div class="card-icon">
-                    <i class="material-icons">content_copy</i>
+                    <span class="material-icons">
+                      perm_identity
+                      </span>
                   </div>
                   <p class="card-category">User</p>
                   <h4 class="card-title">ADD USER
@@ -155,7 +159,9 @@ The above copyright notice and this permission notice shall be included in all c
               <div class="card card-stats">
                 <div class="card-header card-header-success card-header-icon">
                   <div class="card-icon">
-                    <i class="material-icons">store</i>
+                    <span class="material-icons">
+                      swap_horizontal_circle
+                      </span>
                   </div>
                   <p class="card-category">USER</p>
                   <h4 class="card-title">RESCHEDULE</h4>
@@ -169,9 +175,11 @@ The above copyright notice and this permission notice shall be included in all c
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
+                <div class="card-header card-header-success card-header-icon">
                   <div class="card-icon">
-                    <i class="material-icons">info_outline</i>
+                    <span class="material-icons">
+                      event_note
+                      </span>
                   </div>
                   <p class="card-category">ADD APPT</p>
                   <h4 class="card-title">Manual Add</h4>
@@ -187,7 +195,9 @@ The above copyright notice and this permission notice shall be included in all c
               <div class="card card-stats">
                 <div class="card-header card-header-info card-header-icon">
                   <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
+                    <span class="material-icons">
+                      verified_user
+                      </span>
                   </div>
                   <p class="card-category">Manual</p>
                   <h4 class="card-title">Verify</h4>

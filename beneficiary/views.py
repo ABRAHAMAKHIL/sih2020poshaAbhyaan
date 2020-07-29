@@ -5,6 +5,7 @@ from django.urls import reverse
 from . models import *
 from datetime import datetime  
 from datetime import timedelta  
+from twilio.rest import Client
 from django.contrib.auth.decorators import login_required
 from django.db import connections
 from django.contrib.auth import authenticate, login, logout
@@ -55,6 +56,7 @@ def registerBen(request):
             cruser.save()
             
             request.session['u_phno'] = cruser.u_phno
+            request.session['u_phone'] = cruser.u_phone
 
             registered = True   
             return HttpResponseRedirect(reverse('userbmi'))
@@ -121,7 +123,9 @@ def timelinegen(request):
 def gentimeline(request):
     id=str(request.POST["userid"])
     request.session['u_phno'] = id
+    
     z = str(request.session.get('hw_pincode'))
+    ph = str(request.session.get('u_phone'))
     v = str(request.user)
     date1=datetime.now()+ timedelta(days=30)
     date2=datetime.now()+ timedelta(days=60)
@@ -138,9 +142,9 @@ def gentimeline(request):
     c = c+str(id)
     cursor = connections['default'].cursor()
     apstatus = False
-    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s)", [id, date1,x1,a,v,z,aptype,apstatus])
-    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s)", [id, date2,x2,b,v,z,aptype,apstatus])
-    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode,aptype,apstatus) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s)", [id, date3,x3,c,v,z,aptype,apstatus])
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode,aptype,apstatus,apPhone) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s,%s)", [id, date1,x1,a,v,z,aptype,apstatus,ph])
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode,aptype,apstatus,apPhone) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s,%s)", [id, date2,x2,b,v,z,aptype,apstatus,ph])
+    cursor.execute("INSERT INTO beneficiary_userappointments(u_user_id,apdate,apno,apref,apassign,apPincode,aptype,apstatus,apPhone) VALUES( %s , %s ,%s,%s,%s,%s,%s,%s,%s)", [id, date3,x3,c,v,z,aptype,apstatus,ph])
 
     return HttpResponseRedirect(reverse('timelinepage'))
 
@@ -204,7 +208,10 @@ def displayappt(request):
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers']) 
 def rescheduleRef(request):
-     return render(request,'rescheduleRef.html')
+
+            
+    
+    return render(request,'rescheduleRef.html')
 
 @login_required(login_url='loginPage')
 @allowed_users(allowed_roles=['healthworkers']) 

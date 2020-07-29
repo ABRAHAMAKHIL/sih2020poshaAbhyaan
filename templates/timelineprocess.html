@@ -175,25 +175,52 @@ The above copyright notice and this permission notice shall be included in all c
                 </div>
                 <div class="card-body">
                  
-                    <div class="row">
-                      <div class="col-md-5">
-                        <div class="form-group">
-                          <label class="bmd-label-floating"><h5>Name:</h5></label>
-                          {{user1.u_fname}} {{user1.u_sname}}
-                        </div>
-                      </div><br>
-                    </div>
-
-
                   <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                       <div class="form-group">
-                        <label class="bmd-label-floating"><h5>Phone No:</h5></label>
-                        {{user1.u_phno}}
+                        <label class="bmd-label-floating"><h5>Name:</h5></label>
+                        {{user1.u_fname}} {{user1.u_sname}}
                       </div>
+                    </div><br>
+                  </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="bmd-label-floating"><h5>User ID:</h5></label>
+                      {{user1.u_phno}}
                     </div>
                   </div>
-                
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="bmd-label-floating"><h5>Phone:</h5></label>
+                      {{user1.u_phone}}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="bmd-label-floating"><h5>DOB:</h5></label>
+                      {{user1.u_DOB}}
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="bmd-label-floating"><h5>Type:</h5></label>
+                      {% if user1.u_type == True %}
+                      Mother 
+                      {% endif %}                          
+                      {% if user1.u_type == False %}
+                       Nutrition
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
                 </div>
               </div>
             </div>

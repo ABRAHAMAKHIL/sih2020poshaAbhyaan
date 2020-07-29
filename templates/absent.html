@@ -52,7 +52,7 @@
               <p>Patient List</p>
             </a>
           </li>
-          <li class="nav-item active ">
+          <li class="nav-item ">
             <a class="nav-link" href="{% url 'workerAppt' %}">
               <i class="material-icons">library_books</i>
               <p>Appointments</p>
@@ -74,6 +74,12 @@
             <a class="nav-link" href="{% url 'apptdetail' %}">
               <i class="material-icons">bubble_chart</i>
               <p>Appointment Search</p>
+            </a>
+          </li>
+          <li class="nav-item active ">
+            <a class="nav-link" href="{% url 'absent' %}">
+              <i class="material-icons">library_books</i>
+              <p>Missed Appointment</p>
             </a>
           </li>
           
@@ -103,6 +109,8 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item" href="{% url 'localsms1' %}">Absent</a>
+                  <a class="dropdown-item" href="{% url 'localsms' %}">Notify</a>
                   <a class="dropdown-item" href="{% url 'logoutpage' %}">Log out</a>
                 </div>
               </li>
@@ -138,6 +146,9 @@
                           User ID
                         </th>
                         <th>
+                          Phone
+                          </th>
+                        <th>
                           Reference Number
                         </th>
                         <th>
@@ -155,6 +166,9 @@
                           </td>
                           <td>
                             {{i.u_user_id}} 
+                          </td>
+                          <td>
+                            {{i.apPhone}} 
                           </td>
                           <td>
                            {{i.apref}}
