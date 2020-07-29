@@ -23,6 +23,7 @@ urlpatterns = [
     path('verifyDetail',views.verifyDetail,name='verifyDetail'),
     path('verifyprocess',views.verifyprocess,name='verifyprocess'),
     path("logoutpage",views.logoutpage,name="logoutpage"),
+    
 
 ]
     

@@ -1,5 +1,4 @@
-{% load static%}
-
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,66 +32,60 @@
       <div class="logo"><a href="{% url 'index' %}">
           POSHAN ABHIYAN
         </a></div>
-        <div class="sidebar-wrapper">
-          <ul class="nav">
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'workerDash' %}">
-                <i class="material-icons">dashboard</i>
-                <p>Dashboard</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'workerProfile' %}">
-                <i class="material-icons">person</i>
-                <p>User Profile</p>
-              </a>
-            </li>
-            <li class="nav-item active  ">
-              <a class="nav-link" href="{% url 'workerPlist' %}">
-                <i class="material-icons">content_paste</i>
-                <p>Patient List</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'workerAppt' %}">
-                <i class="material-icons">library_books</i>
-                <p>Appointments</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'visitapptid' %}">
-                <i class="material-icons">bubble_chart</i>
-                <p>Visitation</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'timelinepatient' %}">
-                <i class="material-icons">bubble_chart</i>
-                <p>Timeline</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'apptdetail' %}">
-                <i class="material-icons">bubble_chart</i>
-                <p>Appointment Search</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'absent' %}">
-                <i class="material-icons">library_books</i>
-                <p>Missed Appointment</p>
-              </a>
-            </li>
-            
-          </ul>
-        </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item ">
+            <a  class="nav-link" href="{% url 'workerDash' %}">
+              <i class="material-icons">dashboard</i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'workerProfile' %}">
+              <i class="material-icons">person</i>
+              <p>User Profile</p>
+            </a>
+          </li>
+          <li class="nav-item   ">
+            <a class="nav-link" href="{% url 'workerPlist' %}">
+              <i class="material-icons">content_paste</i>
+              <p>Patient List</p>
+            </a>
+          </li>
+          <li class="nav-item active ">
+            <a class="nav-link" href="{% url 'workerAppt' %}">
+              <i class="material-icons">library_books</i>
+              <p>Appointments</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'visitapptid' %}">
+              <i class="material-icons">bubble_chart</i>
+              <p>Visitation</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'timelinepatient' %}">
+              <i class="material-icons">bubble_chart</i>
+              <p>Timeline</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'apptdetail' %}">
+              <i class="material-icons">bubble_chart</i>
+              <p>Appointment Search</p>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">User List List</a>
+            <a class="navbar-brand" href="javascript:;">User Appointments</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -123,125 +116,59 @@
           <div class="row">
             <div class="col-md-12">
               <div class="card">
-                <div style="background: #0a6ebd;" class="card-header card-header-primary">
-                  <h4 class="card-title ">Verified Users</h4>
-                  
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead class=" text-primary">
-                        <th>
-                          ID
-                        </th>
-                        <th>
-                          Name
-                        </th>
-                        <th>
-                          Pin Code
-                        </th>
-                        <th>
-                          District
-                        </th>
-                        <th>
-                          DOB
-                        </th>
-                        <th>
-                          Type
-                        </th>
-                      </thead>
-                      <tbody>
-                        {% for i in ver %}
-                        <tr>
-                          <td>
-                            {{i.u_user}}
-                          </td>
-                          <td>
-                            {{i.u_fname}} {{i.u_sname}}
-                          </td>
-                          <td>
-                           {{i.u_pincode}}
-                          </td>
-                          <td>
-                          {{i.u_district}}
-                          </td>
-                          <td>
-                            {{i.u_DOB}}
-                          </td>
-                          {% if i.u_type == True %}
-                          <td>
-                            Mother
-                          </td>
-                          {% else %}
-                          <td>
-                            Child
-                          </td>
-                          {% endif %}
-                        </tr>
-                        
-                        {% endfor %}
-                       
-                        
-                      </tbody>
-                    </table>
-                  </div>
+                
+                
                 </div>
               </div>
             </div>
             <div class="col-md-12">
               <div class="card card-plain">
                 <div style="background: #0a6ebd;" class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"> Unverified Users</h4>
-                  
+                  <h4 class="card-title mt-0"> Missed Appointments</h4>
+                  <p class="card-category">List of Appointments in past 7 days</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead class="">
                         <th>
-                          ID
+                          Date
                         </th>
                         <th>
-                          Name
+                          User ID
                         </th>
                         <th>
-                          Pin Code
+                          Reference Number
                         </th>
                         <th>
-                        District
+                        Appointment No
                         </th>
                         <th>
-                         DOB
-                        </th>
-                        <th>
-                          Type
+                        Type
                         </th>
                       </thead>
                       <tbody>
                         {% for i in notver %}
                         <tr>
                           <td>
-                            {{i.u_user}}
+                            {{i.apdate}}
                           </td>
                           <td>
-                            {{i.u_fname}} {{i.u_sname}}
+                            {{i.u_user_id}} 
                           </td>
                           <td>
-                           {{i.u_pincode}}
+                           {{i.apref}}
                           </td>
                           <td>
-                          {{i.u_district}}
+                          {{i.apno}}
                           </td>
-                          <td >
-                            {{i.u_DOB}}
-                          </td>
-                          {% if i.u_type == True %}
+                          {% if i.aptype == True %}
                           <td>
-                            Mother
+                           Medicine
                           </td>
                           {% else %}
                           <td>
-                            Child
+                           Nutrition
                           </td>
                           {% endif %}
                         </tr>
@@ -292,7 +219,7 @@
   <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
-  <script src="{% static 'js/plugins/arrive.min.js' %}"></script>
+  <script src="{% static 'js/plugins/arrive.min.js"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chartist JS -->

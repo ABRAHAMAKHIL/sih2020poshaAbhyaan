@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    
+    'pysms',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -80,9 +80,9 @@ DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.mysql',
 'NAME': 'sih2020',
-'USER': 'admin',
-'PASSWORD': "sih2020agnels",
-'HOST' : "sih2020.cfafpwsc4oxl.us-east-2.rds.amazonaws.com",
+'USER': 'root',
+'PASSWORD': "",
+'HOST' : "localhost",
 'PORT': '3306',
 
 'OPTIONS': {
