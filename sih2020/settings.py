@@ -25,7 +25,7 @@ SECRET_KEY = '4+adx+l%yhmx%jgw%3r5#o195db)x42d)4-&ecocy*ju)4q01a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://myposhanabhyaaan.herokuapp.com','127.0.0.1' ]
+ALLOWED_HOSTS = ['127.0.0.1','localhost' ]
 
 
 # Application definition
