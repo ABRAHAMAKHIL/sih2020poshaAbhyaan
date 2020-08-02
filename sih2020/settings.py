@@ -25,7 +25,7 @@ SECRET_KEY = '4+adx+l%yhmx%jgw%3r5#o195db)x42d)4-&ecocy*ju)4q01a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['https://myposhanabhyaaan.herokuapp.com','127.0.0.1' ]
 
 
 # Application definition
@@ -80,9 +80,9 @@ DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.mysql',
 'NAME': 'sih2020',
-'USER': 'admin',
-'PASSWORD': "sih2020agnels",
-'HOST' : "sih2020.cfafpwsc4oxl.us-east-2.rds.amazonaws.com",
+'USER': 'root',
+'PASSWORD': "",
+'HOST' : "localhost",
 'PORT': '3306',
 
 'OPTIONS': {
